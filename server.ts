@@ -10,10 +10,6 @@ const fastify = Fastify({
 await fastify.register(prismaPlugin)
 await fastify.register(weatherRoutes)
 
-fastify.get('/', async (_request, _reply) => {
-  return { hello: 'world' }
-})
-
 /**
  * Run the server!
  */
