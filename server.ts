@@ -1,8 +1,11 @@
 import Fastify from 'fastify'
+import prismaPlugin from './src/plugins/prisma.js'
 
 const fastify = Fastify({
   logger: true
 })
+
+await fastify.register(prismaPlugin)
 
 fastify.get('/', async (_request, _reply) => {
   return { hello: 'world' }
