@@ -1,11 +1,14 @@
+import 'dotenv/config'
 import Fastify from 'fastify'
 import prismaPlugin from './src/plugins/prisma.js'
+import weatherRoutes from './src/routes/weather.js'
 
 const fastify = Fastify({
   logger: true
 })
 
 await fastify.register(prismaPlugin)
+await fastify.register(weatherRoutes)
 
 fastify.get('/', async (_request, _reply) => {
   return { hello: 'world' }
