@@ -4,8 +4,8 @@ import sensible from '@fastify/sensible'
 import ormPlugin from './plugins/infrastructure/orm.js'
 import correlationPlugin from './plugins/observability/correlation.js'
 import errorHandlerPlugin from './plugins/observability/errorHandler.js'
-import healthRoutes from './routes/health.js'
-import weatherRoutes from './routes/weather.js'
+import healthRoutes from './routes/health/index.js'
+import weatherRoutes from './routes/weather/index.js'
 
 export async function buildApp(): Promise<FastifyInstance> {
   const fastify = Fastify({

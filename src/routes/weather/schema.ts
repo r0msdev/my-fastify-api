@@ -1,5 +1,5 @@
 import { FastifySchema } from 'fastify'
-import { metaSchema } from './meta.js'
+import { metaSchema } from '../../schemas/meta.js'
 
 export const dataInfoSchema = {
   type: 'object',

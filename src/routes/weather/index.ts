@@ -1,9 +1,7 @@
 import { FastifyPluginAsync } from 'fastify'
-import { CreateWeatherRecordBody } from '../types/weather.js'
-import { createSchema, listSchema, getByIdSchema } from '../schemas/weather.js'
-import { WeatherService } from '../services/WeatherService.js'
-
-// ── Routes ───────────────────────────────────────────────────────────────────
+import { CreateWeatherRecordBody } from '../../types/weather.js'
+import { createSchema, listSchema, getByIdSchema } from './schema.js'
+import { WeatherService } from '../../services/WeatherService.js'
 
 const weatherRoutes: FastifyPluginAsync = async (server) => {
   // POST /weather
