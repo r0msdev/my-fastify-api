@@ -6,6 +6,9 @@
     "dev": "tsx watch server.ts",
     "start": "node dist/server.js",
     "build": "tsc",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "db:migrate": "mikro-orm migration:create",
@@ -29,9 +32,11 @@
   "devDependencies": {
     "@mikro-orm/cli": "^6.6.8",
     "@types/node": "^22.0.0",
+    "@vitest/coverage-v8": "^4.0.18",
     "eslint": "^10.0.2",
     "tsx": "^4.0.0",
     "typescript": "^5.0.0",
-    "typescript-eslint": "^8.56.1"
+    "typescript-eslint": "^8.56.1",
+    "vitest": "^4.0.18"
   }
 }
