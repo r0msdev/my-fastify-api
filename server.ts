@@ -1,8 +1,10 @@
 import 'reflect-metadata'
 import 'dotenv/config'
 import Fastify, { FastifyRequest } from 'fastify'
+import sensible from '@fastify/sensible'
 import ormPlugin from './src/plugins/orm.js'
 import correlationPlugin from './src/plugins/correlation.js'
+import healthRoutes from './src/routes/health.js'
 import weatherRoutes from './src/routes/weather.js'
 
 const fastify = Fastify({
@@ -20,8 +22,10 @@ const fastify = Fastify({
   },
 })
 
+await fastify.register(sensible)
 await fastify.register(correlationPlugin)
 await fastify.register(ormPlugin)
+await fastify.register(healthRoutes)
 await fastify.register(weatherRoutes)
 
 const shutdown = async (signal: string) => {

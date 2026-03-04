@@ -35,7 +35,7 @@ const weatherRoutes: FastifyPluginAsync = async (server) => {
       const record = await service.findById(request.params.id)
 
       if (!record) {
-        return reply.code(404).send({ message: 'Weather record not found' })
+        return reply.notFound('Weather record not found')
       }
 
       return reply.send(record)

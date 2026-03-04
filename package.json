@@ -15,6 +15,7 @@
     "db:schema:check": "mikro-orm schema:check"
   },
   "dependencies": {
+    "@fastify/sensible": "^6.0.4",
     "@mikro-orm/core": "^6.6.8",
     "@mikro-orm/migrations": "^6.6.8",
     "@mikro-orm/postgresql": "^6.6.8",
