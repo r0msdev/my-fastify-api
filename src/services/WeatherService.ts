@@ -19,7 +19,7 @@ export class WeatherService {
       dataInfo: body.dataInfo,
     })
 
-    await this.em.persistAndFlush(record)
+    await this.em.persist(record).flush()
 
     return this.toResponse(record)
   }

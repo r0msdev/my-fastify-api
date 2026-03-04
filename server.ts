@@ -24,15 +24,18 @@ await fastify.register(correlationPlugin)
 await fastify.register(ormPlugin)
 await fastify.register(weatherRoutes)
 
-/**
- * Run the server!
- */
-const start = async () => {
-  try {
-    await fastify.listen({ port: 3000, host: '0.0.0.0' })
-  } catch (err) {
-    fastify.log.error(err)
-    process.exit(1)
-  }
+const shutdown = async (signal: string) => {
+  fastify.log.info({ signal }, 'Shutting down gracefully')
+  await fastify.close()
+  process.exit(0)
 }
-start()
+
+process.on('SIGTERM', () => shutdown('SIGTERM'))
+process.on('SIGINT', () => shutdown('SIGINT'))
+
+try {
+  await fastify.listen({ port: 3000, host: '0.0.0.0' })
+} catch (err) {
+  fastify.log.error(err)
+  process.exit(1)
+}
