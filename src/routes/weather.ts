@@ -1,19 +1,7 @@
 import { FastifyPluginAsync } from 'fastify'
-import { CreateWeatherRecordBody, WeatherRecord as WeatherRecordType } from '../types/weather.js'
+import { CreateWeatherRecordBody } from '../types/weather.js'
 import { createSchema, listSchema, getByIdSchema } from '../schemas/weather.js'
-import { WeatherRecord } from '../entities/WeatherRecord.js'
-
-// ── Helpers ──────────────────────────────────────────────────────────────────
-
-function toResponse(record: WeatherRecord): WeatherRecordType & { createdAt: string } {
-  return {
-    id: record.id,
-    sensorName: record.sensorName,
-    sensorDate: record.sensorDate.toISOString(),
-    dataInfo: record.dataInfo,
-    createdAt: record.createdAt.toISOString(),
-  }
-}
+import { WeatherService } from '../services/WeatherService.js'
 
 // ── Routes ───────────────────────────────────────────────────────────────────
 
@@ -23,16 +11,9 @@ const weatherRoutes: FastifyPluginAsync = async (server) => {
     '/weather',
     { schema: createSchema },
     async (request, reply) => {
-      const { sensorName, sensorDate, dataInfo } = request.body
-
-      const record = request.em.create(WeatherRecord, {
-        sensorName,
-        sensorDate: new Date(sensorDate),
-        dataInfo,
-      })
-      await request.em.persistAndFlush(record)
-
-      return reply.code(201).send(toResponse(record))
+      const service = new WeatherService(request.em)
+      const record = await service.create(request.body)
+      return reply.code(201).send(record)
     }
   )
 
@@ -40,17 +21,9 @@ const weatherRoutes: FastifyPluginAsync = async (server) => {
   server.get<{
     Querystring: { sensorName?: string; limit?: number; offset?: number }
   }>('/weather', { schema: listSchema }, async (request, reply) => {
-    const { sensorName, limit = 20, offset = 0 } = request.query
-
-    const where = sensorName ? { sensorName } : {}
-
-    const [data, total] = await request.em.findAndCount(WeatherRecord, where, {
-      orderBy: { sensorDate: 'desc' },
-      limit,
-      offset,
-    })
-
-    return reply.send({ total, data: data.map(toResponse) })
+    const service = new WeatherService(request.em)
+    const result = await service.list(request.query)
+    return reply.send(result)
   })
 
   // GET /weather/:id
@@ -58,13 +31,14 @@ const weatherRoutes: FastifyPluginAsync = async (server) => {
     '/weather/:id',
     { schema: getByIdSchema },
     async (request, reply) => {
-      const record = await request.em.findOne(WeatherRecord, { id: request.params.id })
+      const service = new WeatherService(request.em)
+      const record = await service.findById(request.params.id)
 
       if (!record) {
         return reply.code(404).send({ message: 'Weather record not found' })
       }
 
-      return reply.send(toResponse(record))
+      return reply.send(record)
     }
   )
 }

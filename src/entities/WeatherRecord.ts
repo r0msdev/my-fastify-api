@@ -11,12 +11,12 @@ export class WeatherRecord {
   @Property({ type: 'string' })
   sensorName!: string
 
-  @Property({ type: 'date' })
+  @Property({ type: 'datetime' })
   sensorDate!: Date
 
   @Property({ type: 'jsonb' })
   dataInfo!: DataInfo
 
-  @Property({ type: 'date', defaultRaw: 'now()' })
+  @Property({ type: 'datetime', defaultRaw: 'now()' })
   createdAt: Date = new Date()
 }
