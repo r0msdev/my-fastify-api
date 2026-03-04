@@ -1,6 +1,7 @@
 import 'reflect-metadata'
 import Fastify, { FastifyInstance, FastifyRequest } from 'fastify'
 import sensible from '@fastify/sensible'
+import configPlugin from './plugins/infrastructure/config.js'
 import ormPlugin from './plugins/infrastructure/orm.js'
 import correlationPlugin from './plugins/observability/correlation.js'
 import errorHandlerPlugin from './plugins/observability/errorHandler.js'
@@ -23,6 +24,7 @@ export async function buildApp(): Promise<FastifyInstance> {
     },
   })
 
+  await fastify.register(configPlugin)
   await fastify.register(sensible)
   await fastify.register(correlationPlugin)
   await fastify.register(errorHandlerPlugin)

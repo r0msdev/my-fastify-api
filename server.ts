@@ -1,5 +1,4 @@
 import 'reflect-metadata'
-import 'dotenv/config'
 import { buildApp } from './src/app.js'
 
 const fastify = await buildApp()
@@ -14,7 +13,7 @@ process.on('SIGTERM', () => shutdown('SIGTERM'))
 process.on('SIGINT', () => shutdown('SIGINT'))
 
 try {
-  await fastify.listen({ port: 3000, host: '0.0.0.0' })
+  await fastify.listen({ port: fastify.config.PORT, host: '0.0.0.0' })
 } catch (err) {
   fastify.log.error(err)
   process.exit(1)
