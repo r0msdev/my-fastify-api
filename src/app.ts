@@ -1,8 +1,8 @@
 import 'reflect-metadata'
 import Fastify, { FastifyInstance, FastifyRequest } from 'fastify'
 import sensible from '@fastify/sensible'
-import ormPlugin from './plugins/orm.js'
-import correlationPlugin from './plugins/correlation.js'
+import ormPlugin from './plugins/infrastructure/orm.js'
+import correlationPlugin from './plugins/observability/correlation.js'
 import healthRoutes from './routes/health.js'
 import weatherRoutes from './routes/weather.js'
 

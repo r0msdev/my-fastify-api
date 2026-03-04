@@ -1,7 +1,7 @@
 import fp from 'fastify-plugin'
 import { FastifyPluginAsync } from 'fastify'
 import { MikroORM, EntityManager } from '@mikro-orm/postgresql'
-import config from '../../mikro-orm.config.js'
+import config from '../../../mikro-orm.config.js'
 
 declare module 'fastify' {
   interface FastifyInstance {

@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeAll, afterAll } from 'vitest'
 import Fastify, { FastifyInstance } from 'fastify'
 import sensible from '@fastify/sensible'
-import correlationPlugin from '../../src/plugins/correlation.js'
+import correlationPlugin from '../../src/plugins/observability/correlation.js'
 import healthRoutes from '../../src/routes/health.js'
 
 const buildTestApp = async (): Promise<FastifyInstance> => {
