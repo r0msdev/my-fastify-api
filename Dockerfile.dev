@@ -4,12 +4,12 @@ WORKDIR /app
 
 # Layer cache: install deps first, source files later
 COPY package*.json ./
-RUN npm ci --ignore-scripts
+RUN npm ci
 
 # Copy source (overridden by volume mount in dev)
 COPY . .
 
 EXPOSE 3000
 
-# Generate client, deploy migrations, then start with hot-reload
-CMD ["sh", "-c", "npx prisma generate && npm run db:migrate:deploy && npm run dev"]
+# Sync schema then start with hot-reload
+CMD ["sh", "-c", "npm run db:schema:update && npm run dev"]

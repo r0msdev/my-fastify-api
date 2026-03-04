@@ -7,29 +7,29 @@
     "start": "tsx server.ts",
     "build": "tsc",
     "serve": "node dist/server.js",
-    "postinstall": "prisma generate",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "db:generate": "prisma generate",
-    "db:migrate": "prisma migrate dev",
-    "db:migrate:deploy": "prisma migrate deploy",
-    "db:studio": "prisma studio",
-    "db:push": "prisma db push"
+    "db:migrate": "mikro-orm migration:create",
+    "db:migrate:up": "mikro-orm migration:up",
+    "db:migrate:fresh": "mikro-orm schema:fresh --run",
+    "db:schema:update": "mikro-orm schema:update --run",
+    "db:schema:check": "mikro-orm schema:check"
   },
   "dependencies": {
-    "@prisma/adapter-pg": "^7.4.2",
-    "@prisma/client": "^7.4.2",
+    "@mikro-orm/core": "^6.6.8",
+    "@mikro-orm/migrations": "^6.6.8",
+    "@mikro-orm/postgresql": "^6.6.8",
     "dotenv": "^17.3.1",
     "fastify": "^5.7.4",
     "fastify-plugin": "^5.1.0",
     "pg": "^8.19.0",
-    "pino": "^10.3.1"
+    "pino": "^10.3.1",
+    "reflect-metadata": "^0.2.2"
   },
   "devDependencies": {
+    "@mikro-orm/cli": "^6.6.8",
     "@types/node": "^22.0.0",
-    "@types/pg": "^8.18.0",
     "eslint": "^10.0.2",
-    "prisma": "^7.4.2",
     "tsx": "^4.0.0",
     "typescript": "^5.0.0",
     "typescript-eslint": "^8.56.1"
