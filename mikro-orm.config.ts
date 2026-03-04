@@ -1,3 +1,4 @@
+import 'dotenv/config'
 import { defineConfig } from '@mikro-orm/postgresql'
 import { Migrator } from '@mikro-orm/migrations'
 import { WeatherRecord } from './src/entities/WeatherRecord.js'
