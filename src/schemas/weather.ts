@@ -1,4 +1,5 @@
 import { FastifySchema } from 'fastify'
+import { metaSchema } from './meta.js'
 
 export const dataInfoSchema = {
   type: 'object',
@@ -49,7 +50,7 @@ export const listSchema: FastifySchema = {
     200: {
       type: 'object',
       properties: {
-        total: { type: 'integer' },
+        meta: metaSchema,
         data: { type: 'array', items: weatherRecordSchema },
       },
     },

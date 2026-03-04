@@ -1,16 +1,12 @@
 import { EntityManager } from '@mikro-orm/postgresql'
 import { WeatherRecord } from '../entities/WeatherRecord.js'
 import { CreateWeatherRecordBody, WeatherRecord as WeatherRecordResponse } from '../types/weather.js'
+import { PaginatedResult } from '../types/pagination.js'
 
 export interface ListOptions {
   sensorName?: string
   limit?: number
   offset?: number
-}
-
-export interface PaginatedResult<T> {
-  total: number
-  data: T[]
 }
 
 export class WeatherService {
@@ -38,7 +34,21 @@ export class WeatherService {
       offset,
     })
 
-    return { total, data: data.map((r) => this.toResponse(r)) }
+    const totalPages = Math.ceil(total / limit)
+    const currentPage = Math.floor(offset / limit) + 1
+
+    return {
+      meta: {
+        total,
+        limit,
+        offset,
+        totalPages,
+        currentPage,
+        hasNextPage: offset + limit < total,
+        hasPrevPage: offset > 0,
+      },
+      data: data.map((r) => this.toResponse(r)),
+    }
   }
 
   async findById(id: string): Promise<(WeatherRecordResponse & { createdAt: string }) | null> {

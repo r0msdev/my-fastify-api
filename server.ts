@@ -1,13 +1,26 @@
 import 'reflect-metadata'
 import 'dotenv/config'
-import Fastify from 'fastify'
+import Fastify, { FastifyRequest } from 'fastify'
 import ormPlugin from './src/plugins/orm.js'
+import correlationPlugin from './src/plugins/correlation.js'
 import weatherRoutes from './src/routes/weather.js'
 
 const fastify = Fastify({
-  logger: true
+  logger: {
+    level: 'info',
+    serializers: {
+      req (req) {
+        return {
+          method: req.method,
+          url: req.url,
+          correlationId: (req as FastifyRequest).correlationId,
+        }
+      },
+    },
+  },
 })
 
+await fastify.register(correlationPlugin)
 await fastify.register(ormPlugin)
 await fastify.register(weatherRoutes)
 
