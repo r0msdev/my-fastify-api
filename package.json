@@ -13,9 +13,13 @@
     "lint:fix": "eslint . --fix",
     "db:migrate": "mikro-orm migration:create",
     "db:migrate:up": "mikro-orm migration:up",
-    "db:migrate:fresh": "mikro-orm schema:fresh --run",
+    "db:migrate:down": "mikro-orm migration:down",
+    "db:migrate:list": "mikro-orm migration:list",
+    "db:migrate:pending": "mikro-orm migration:pending",
+    "db:migrate:check": "mikro-orm migration:check",
+    "db:migrate:fresh": "mikro-orm migration:fresh",
     "db:schema:update": "mikro-orm schema:update --run",
-    "db:schema:check": "mikro-orm schema:check"
+    "db:schema:fresh": "mikro-orm schema:fresh --run"
   },
   "dependencies": {
     "@fastify/env": "^5.0.3",
