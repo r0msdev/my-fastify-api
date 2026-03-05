@@ -20,7 +20,7 @@ const swaggerPlugin: FastifyPluginAsync = fp(async (server) => {
 
   if (server.config.NODE_ENV !== 'production') {
     await server.register(swaggerUi, {
-      routePrefix: '/documentation',
+      routePrefix: '/docs',
       uiConfig: {
         docExpansion: 'list',
         deepLinking: true,
