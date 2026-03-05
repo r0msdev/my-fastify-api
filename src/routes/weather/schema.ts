@@ -25,6 +25,9 @@ export const weatherRecordSchema = {
 } as const
 
 export const createSchema: FastifySchema = {
+  tags: ['weather'],
+  summary: 'Create a weather record',
+  operationId: 'createWeatherRecord',
   body: {
     type: 'object',
     required: ['sensorName', 'sensorDate', 'dataInfo'],
@@ -38,6 +41,9 @@ export const createSchema: FastifySchema = {
 }
 
 export const listSchema: FastifySchema = {
+  tags: ['weather'],
+  summary: 'List weather records',
+  operationId: 'listWeatherRecords',
   querystring: {
     type: 'object',
     properties: {
@@ -58,6 +64,9 @@ export const listSchema: FastifySchema = {
 }
 
 export const getByIdSchema: FastifySchema = {
+  tags: ['weather'],
+  summary: 'Get a weather record by ID',
+  operationId: 'getWeatherRecordById',
   params: {
     type: 'object',
     required: ['id'],
